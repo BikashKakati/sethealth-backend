@@ -1,22 +1,15 @@
-import express, { Request, Response } from 'express';
-
+import { mongodbUrl, serverPort } from "./config";
+import connectDb from "./db";
+import express from "express";
 const app = express();
-const PORT = process.env.SERVER_PORT || 6000;
+const port = serverPort;
 
-app.use(express.json());
+connectDb(mongodbUrl!);
 
-// Basic GET route
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello, Express with TypeScript!');
+app.get("/", (req: any, res: { send: (arg0: string) => void }) => {
+  res.send("sdasd");
 });
 
-// Basic POST route
-app.post('/data', (req: Request, res: Response) => {
-  const data = req.body;
-  res.json({ message: 'Data received', data });
-});
-
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(port, () => {
+  console.log(`server started on ${port}`);
 });
