@@ -20,7 +20,11 @@ const doctorUserSchema = new mongoose.Schema({
         require:[true,"Email is required"],
         select:false,
     },
-    status:{
+    profileInfo:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"doctorProfile",
+    },
+    activeStatus:{
         type:Boolean,
         default:true,
     },
