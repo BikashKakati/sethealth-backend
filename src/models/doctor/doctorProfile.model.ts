@@ -36,7 +36,7 @@ const doctorProfileSchema = new mongoose.Schema({
    },
    rating:{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "ratings"
+    ref: "review"
    }
 
 },{timestamps:true})
