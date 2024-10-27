@@ -16,6 +16,7 @@ const reviewSchema = new mongoose.Schema(
     patientName: {
       type: String,
     },
+    // Fix: patient modall.
     patientId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "doctorUser",

@@ -23,3 +23,6 @@ const doctorInviteSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+
+export const DoctorInvite = mongoose.model("doctorInvite", doctorInviteSchema)

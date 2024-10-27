@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
-  "type": "module",
   "scripts": {
     "dev": "nodemon --exec node -r ts-node/register --env-file=.env ./src/index.ts",
     "start": "tsc && node dist/index.js"

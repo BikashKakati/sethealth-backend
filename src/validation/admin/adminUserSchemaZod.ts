@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const adminUserSchemaZod = z.object({
+export const adminUserSchemaZod = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   email: z
     .string()
