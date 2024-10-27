@@ -5,25 +5,39 @@ const doctorProfileSchema = new mongoose.Schema({
         type:String,
         require:[true,"Degree is required"],
     },
-    speciality:{
-        type:String,
-        unique:[true,"Phone number is already exist"],
-        require:[true,"Phone number required"],
+    services:{
+        type:[{type:mongoose.Schema.Types.ObjectId, ref:"services"}],
     },
-    email:{
-        type:String,
-        unique:[true,"Email is already exist"],
-        require:[true,"Email is required"],
-    },
-    password:{
-        type:String,
-        require:[true,"Email is required"],
-        select:false,
-    },
-    status:{
-        type:Boolean,
-        default:true,
-    },
+
+   experience:{
+    type:Number,
+   },
+   currentOrganization:{
+    type:String,
+   },
+   description:{
+    type:String,
+   },
+   availableTimingRange:{
+    type:{
+        from:Date,
+        to:Date,
+        servicesType:[String],
+    }
+
+   },
+   price:{
+    type:[
+        {
+           serviceType:String,
+           rate:Number, 
+        }
+    ]
+   },
+   rating:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "review"
+   }
 
 },{timestamps:true})
 
