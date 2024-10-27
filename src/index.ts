@@ -1,6 +1,6 @@
 import { mongodbUrl, serverPort } from "./config";
 import connectDb from "./db";
-import { app } from "./models/app";
+import { app } from "./app";
 
 const port = serverPort;
 
