@@ -18,17 +18,16 @@ const servicesSchema = new mongoose.Schema(
         },
       ],
       // already defined service types, no need to send from frontend for every request...
-      default:[
-        {name:"Video consultancy"},
-        {name:"Home visit"},
-        {name:"Clinic visit"}
-      ]
+      default: [
+        { name: "Video consultancy" },
+        { name: "Home visit" },
+        { name: "Clinic visit" },
+      ],
     },
-    symptoms:{
-        type:[String],
-        minlength:[1,"Atlead one symptoms requried"],
+    symptoms: {
+      type: [String],
+      minlength: [1, "Atlead one symptoms requried"],
     },
-    
   },
   { timestamps: true }
 );
