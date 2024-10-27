@@ -1,0 +1,13 @@
+import { z } from "zod";
+
+const adminUserSchemaZod = z.object({
+  name: z.string().min(1, { message: "Name is required" }),
+  email: z
+    .string()
+    .email({ message: "Invalid email address" })
+    .min(1, { message: "Email is required" }),
+  password: z.string().min(1, { message: "Password is required" }),
+  role: z.string().min(1, { message: "Role is required" }),
+});
+
+export type AdminUserSchemaZod = z.infer<typeof adminUserSchemaZod>;
