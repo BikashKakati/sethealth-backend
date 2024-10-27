@@ -18,12 +18,14 @@ const doctorProfileSchema = new mongoose.Schema({
    description:{
     type:String,
    },
-   availableTimingRange:{
-    type:{
-        from:Date,
-        to:Date,
-        servicesType:[String],
-    }
+   availableTimingSlots:{
+    type:[
+        {
+            from:Date,
+            to:Date,
+            servicesType:[String],
+        }
+    ]
 
    },
    price:{
