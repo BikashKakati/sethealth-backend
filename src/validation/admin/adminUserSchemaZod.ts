@@ -10,4 +10,12 @@ export const adminUserSchemaZod = z.object({
   role: z.string().min(1, { message: "Role is required" }),
 });
 
+export const adminUserLoginSchemaZod = z.object({
+  email: z
+    .string()
+    .min(1, { message: "Email is required" })
+    .email({ message: "Invalid email address" }),
+  password: z.string().min(1, { message: "Password is required" }),
+});
+
 export type AdminUserSchemaZodType = z.infer<typeof adminUserSchemaZod>;

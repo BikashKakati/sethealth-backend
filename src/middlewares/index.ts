@@ -10,9 +10,10 @@ export const validateRequest =
     } catch (error) {
       if (error instanceof ZodError) {
         const errorMessages = error.errors.map((issue: any) => {
+          console.log(issue);
           const fieldName = issue.path.join(".");
           const errMessages = {
-            [fieldName]: `${fieldName} is ${issue.message}`,
+            [fieldName]: issue.message,
           };
           return errMessages;
         });
