@@ -1,5 +1,5 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
-import { z, ZodSchema } from "zod";
+import { ZodError, ZodSchema } from "zod";
 
 export const validateRequest =
   (schema: ZodSchema): RequestHandler =>
@@ -8,16 +8,17 @@ export const validateRequest =
       schema.parse(req.body);
       next();
     } catch (error) {
-        if (error instanceof z.ZodError) {
-        //   const errors = error.errors.map((err) => ({
-        //     field: err.path.join("."),
-        //     message: err.message,
-        //   }));
-          res.status(400).json({
-            status: "error",
-            error,
-          });
-        }
+      if (error instanceof ZodError) {
+        const errorMessages = error.errors.map((issue: any) => {
+          const fieldName = issue.path.join(".");
+          const errMessages = {
+            [fieldName]: `${fieldName} is ${issue.message}`,
+          };
+          return errMessages;
+        });
+        res.status(400).json({ error: "Invalid data", details: errorMessages });
+      } else {
+        res.status(500).json({ error: "Internal Server Error" });
       }
+    }
   };
-

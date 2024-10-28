@@ -1,9 +1,10 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import { adminUserSchemaZod } from "../../validation/admin/adminUserSchemaZod";
 import { validateRequest } from "../../middlewares";
+import { handleAdminRegister } from "../../controllers/authController";
 
-const Routes = express.Router();
+export const adminAuthRoutes = express.Router();
 
-// Routes.post("/user",,(req:Request,res:Response)=>{
-//     res.status(201).json({ message: 'User registered successfully!' });
-// })
+adminAuthRoutes
+  .route("/register")
+  .post(validateRequest(adminUserSchemaZod), handleAdminRegister);

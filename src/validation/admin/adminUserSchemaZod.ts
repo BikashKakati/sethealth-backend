@@ -10,4 +10,4 @@ export const adminUserSchemaZod = z.object({
   role: z.string().min(1, { message: "Role is required" }),
 });
 
-export type AdminUserSchemaZod = z.infer<typeof adminUserSchemaZod>;
+export type AdminUserSchemaZodType = z.infer<typeof adminUserSchemaZod>;
