@@ -1,5 +1,7 @@
 // src/@types/express.d.ts
 import * as express from "express";
+import { JwtPayload } from "jsonwebtoken";
+import { ObjectId } from "mongoose";
 
 declare global {
   namespace Express {
@@ -10,5 +12,11 @@ declare global {
         data?: object
       ) => void;
     }
+  }
+}
+
+declare module "express-serve-static-core" {
+  interface Request {
+    user?: JwtPayload & { id: string };
   }
 }
