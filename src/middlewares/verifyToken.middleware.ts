@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { tokenKey, tokenName } from "../config";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import { tokenKey, tokenName } from "../config";
 
 export const verifyToken = (
   req: Request,

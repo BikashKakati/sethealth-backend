@@ -1,25 +1,18 @@
+import { getFormattedValidationErrorList } from "@/utils";
 import { NextFunction, Request, RequestHandler, Response } from "express";
-import { ZodError, ZodSchema } from "zod";
+import { ZodSchema } from "zod";
 
 export const validateRequest =
   (schema: ZodSchema): RequestHandler =>
-  (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.parse(req.body);
+      const result = await schema.safeParseAsync(req.body);
+      if(!result.success){
+        const formattedErrorList = getFormattedValidationErrorList(result.error.issues);
+       res.customResponse(400,"fields are not valid",formattedErrorList)
+      }
       next();
     } catch (error) {
-      if (error instanceof ZodError) {
-        const errorMessages = error.errors.map((issue: any) => {
-          console.log(issue);
-          const fieldName = issue.path.join(".");
-          const errMessages = {
-            [fieldName]: issue.message,
-          };
-          return errMessages;
-        });
-        res.status(400).json({ error: "Invalid data", details: errorMessages });
-      } else {
-        res.status(500).json({ error: "Internal Server Error" });
+      res.customResponse(500,"Internal server error")
       }
-    }
   };

@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { generateTokens } from "../utils";
 import { tokenName } from "../config";
 import { cookieOptions } from "../constants";
+import { ObjectId } from "mongoose";
 
 export const handleAdminRegister = async (
   req: Request<{}, {}, AdminUserSchemaZodType>,
@@ -14,15 +15,13 @@ export const handleAdminRegister = async (
   try {
     const adminUser = new AdminUser({ name, email, password, role });
     await adminUser.save();
-    res.customResponse(200, "Admin Successfully Registered");
+    res.customResponse(200, "Admin Successfully Registered", adminUser);
   } catch (error: any) {
+    console.log(error);
     if (error.code === 11000) {
-      res.status(400).json({ success: false, message: "Email already exists" });
+      res.customResponse(400, "Email already exists");
     } else {
-      res.status(500).json({
-        message: "Error registering admin user",
-        error,
-      });
+      res.customResponse(500, "Error registering admin user", error);
     }
   }
 };
@@ -32,11 +31,8 @@ export const handleLogin = async (
   res: Response
 ): Promise<void> => {
   const { email, password } = req.body;
-  if (!email || !password) {
-    return res.customResponse(400, "email or password is invalid!");
-  }
 
-  const user: any = await AdminUser.findOne({ email }).select("+password");
+  const user = await AdminUser.findOne({ email }).select("+password");
 
   if (!user) {
     return res.customResponse(404, "User not found");
@@ -47,9 +43,9 @@ export const handleLogin = async (
   if (!passwordMatch) {
     res.customResponse(400, "Password does not match");
   }
-  const token = generateTokens(user._id, user.role);
+  const token = generateTokens(user._id as ObjectId, user.role);
 
-  user.password = undefined;
+  user.password = ""; // because it gives type error when assign undefined
 
   return res
     .cookie(tokenName, token, cookieOptions)
