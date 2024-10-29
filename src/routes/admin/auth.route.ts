@@ -3,7 +3,7 @@ import {
   adminUserLoginSchemaZod,
   adminUserSchemaZod,
 } from "../../validation/admin/adminUserSchemaZod";
-import { validateRequest } from "../../middlewares";
+import { validateRequest } from "../../middlewares/validate.middleware";
 import {
   handleAdminRegister,
   handleLogin,

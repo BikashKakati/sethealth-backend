@@ -1,6 +1,6 @@
+import { getFormattedValidationErrorList } from "@/utils";
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { ZodSchema } from "zod";
-import { getFormattedValidationErrorList } from "../utils";
 
 export const validateRequest =
   (schema: ZodSchema): RequestHandler =>
@@ -16,7 +16,3 @@ export const validateRequest =
       res.customResponse(500,"Internal server error")
       }
   };
-
-
-
-
