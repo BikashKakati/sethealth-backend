@@ -47,7 +47,7 @@ export const handleLogin = async (
   if (!passwordMatch) {
     res.customResponse(400, "Password does not match");
   }
-  const token = generateTokens(user._id);
+  const token = generateTokens(user._id, user.role);
 
   user.password = undefined;
 
