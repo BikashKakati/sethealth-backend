@@ -1,6 +1,6 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { ZodSchema } from "zod";
-import { getFormattedValidationErrorList } from "../util";
+import { getFormattedValidationErrorList } from "../utils";
 
 export const validateRequest =
   (schema: ZodSchema): RequestHandler =>
