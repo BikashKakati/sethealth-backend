@@ -6,6 +6,7 @@ import { generateTokens } from "../utils";
 import { tokenName } from "../config";
 import { cookieOptions } from "../constants";
 import { ObjectId } from "mongoose";
+import { RegisteredUsers } from "@/models/register.model";
 
 export const handleAdminRegister = async (
   req: Request<{}, {}, AdminUserSchemaZodType>,
@@ -14,7 +15,14 @@ export const handleAdminRegister = async (
   const { name, email, password, role } = req.body;
   try {
     const adminUser = new AdminUser({ name, email, password, role });
+    const registeredUsers = new RegisteredUsers({
+      name,
+      email,
+      password,
+      role,
+    });
     await adminUser.save();
+    await registeredUsers.save();
     res.customResponse(200, "Admin Successfully Registered", adminUser);
   } catch (error: any) {
     console.log(error);
@@ -32,7 +40,7 @@ export const handleLogin = async (
 ): Promise<void> => {
   const { email, password } = req.body;
 
-  const user = await AdminUser.findOne({ email }).select("+password");
+  const user = await RegisteredUsers.findOne({ email }).select("+password");
 
   if (!user) {
     return res.customResponse(404, "User not found");

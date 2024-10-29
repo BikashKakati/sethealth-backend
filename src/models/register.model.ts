@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const registerSchema = new mongoose.Schema(
+const registeredUsers = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -33,7 +33,7 @@ interface registerDocument extends mongoose.Document {
   isModified: (path: string) => boolean;
 }
 
-registerSchema.pre<registerDocument>("save", async function (next) {
+registeredUsers.pre<registerDocument>("save", async function (next) {
   if (!this.isModified("password")) {
     return next();
   }
@@ -42,7 +42,7 @@ registerSchema.pre<registerDocument>("save", async function (next) {
   next();
 });
 
-export const register = mongoose.model<registerDocument>(
+export const RegisteredUsers = mongoose.model<registerDocument>(
   "registeredUsers",
-  registerSchema
+  registeredUsers
 );
