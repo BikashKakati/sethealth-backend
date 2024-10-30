@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { adminAuthRoutes } from "./routes/admin/auth.route";
 import { customResponse } from "./middlewares/customRespones.middleware";
+import { adminServiceRoutes } from "./routes/admin/services.route";
 
 export const app = express();
 
@@ -12,4 +13,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(customResponse);
 
-app.use("/api/admin", adminAuthRoutes);
+// admin
+app.use("/api/v1/admin", adminAuthRoutes);
+app.use("/api/v1/admin/services", adminServiceRoutes);
