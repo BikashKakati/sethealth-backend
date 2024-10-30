@@ -15,6 +15,7 @@ export const handleAdminRegister = async (
   try {
     const adminUser = new AdminUser({ name, email, password, role });
     await adminUser.save();
+    adminUser.password = "";
     res.customResponse(200, "Admin Successfully Registered",adminUser);
   } catch (error: any) {
     console.log(error);

@@ -1,4 +1,4 @@
-import { getFormattedValidationErrorList } from "@/utils";
+import { getFormattedValidationErrorList } from "../utils";
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { ZodSchema } from "zod";
 
@@ -8,11 +8,11 @@ export const validateRequest =
     try {
       const result = await schema.safeParseAsync(req.body);
       if(!result.success){
-        const formattedErrorList = getFormattedValidationErrorList(result.error.issues);
-       res.customResponse(400,"fields are not valid",formattedErrorList)
+        const formattedErrorList = getFormattedValidationErrorList(result?.error?.issues);
+        return res.customResponse(400,"fields are not valid",formattedErrorList)
       }
       next();
     } catch (error) {
-      res.customResponse(500,"Internal server error")
+      return res.customResponse(500,"Internal server error")
       }
   };

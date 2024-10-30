@@ -1,4 +1,4 @@
-import { FormattedListType } from "@/types";
+import { FormattedListType } from "../types";
 import { tokenKey } from "../config";
 import jwt from "jsonwebtoken";
 import { ObjectId } from "mongoose";
