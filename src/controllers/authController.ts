@@ -6,6 +6,7 @@ import { generateTokens } from "../utils";
 import { tokenName } from "../config";
 import { cookieOptions } from "../constants";
 import { ObjectId } from "mongoose";
+import { RegisteredUsers } from "@/models/register.model";
 
 export const handleAdminRegister = async (
   req: Request<{}, {}, AdminUserSchemaZodType>,
@@ -14,15 +15,22 @@ export const handleAdminRegister = async (
   const { name, email, password, role } = req.body;
   try {
     const adminUser = new AdminUser({ name, email, password, role });
+    const registeredUsers = new RegisteredUsers({
+      name,
+      email,
+      password,
+      role,
+    });
     await adminUser.save();
+    await registeredUsers.save();
     adminUser.password = "";
-    res.customResponse(200, "Admin Successfully Registered",adminUser);
+    res.customResponse(200, "Admin Successfully Registered", adminUser);
   } catch (error: any) {
     console.log(error);
     if (error.code === 11000) {
-      res.customResponse( 400, "Email already exists");
+      res.customResponse(400, "Email already exists");
     } else {
-      res.customResponse(500, "Error registering admin user",error);
+      res.customResponse(500, "Error registering admin user", error);
     }
   }
 };
@@ -33,7 +41,7 @@ export const handleLogin = async (
 ): Promise<void> => {
   const { email, password } = req.body;
 
-  const user = await AdminUser.findOne({ email }).select("+password");
+  const user = await RegisteredUsers.findOne({ email }).select("+password");
 
   if (!user) {
     return res.customResponse(404, "User not found");
@@ -44,7 +52,7 @@ export const handleLogin = async (
   if (!passwordMatch) {
     res.customResponse(400, "Password does not match");
   }
-  const token = generateTokens(user._id as ObjectId);
+  const token = generateTokens(user._id as ObjectId, user.role);
 
   user.password = ""; // because it gives type error when assign undefined
 
