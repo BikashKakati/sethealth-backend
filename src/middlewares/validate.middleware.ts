@@ -11,6 +11,7 @@ export const validateRequest =
         const formattedErrorList = getFormattedValidationErrorList(result?.error?.issues);
         return res.customResponse(400,"fields are not valid",formattedErrorList)
       }
+      req.body = {...result.data};
       next();
     } catch (error) {
       return res.customResponse(500,"Internal server error")

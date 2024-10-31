@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const doctorProfileSchema = new mongoose.Schema(
   {
+    doctorId: {
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"doctorUser",
+    },
     degree: {
       type: String,
       require: [true, "Degree is required"],
@@ -9,49 +13,51 @@ const doctorProfileSchema = new mongoose.Schema(
     services: {
       type: [
         {
-          serviceId:{ type: mongoose.Schema.Types.ObjectId, ref: "services" },
+          serviceId: { type: mongoose.Schema.Types.ObjectId, ref: "services" },
           serviceTypes: {
-            type:[String]
+            type: [String],
           },
           // service name and symptoms can be changed over time...
-          
-        }
+        },
       ],
     },
 
-   experience:{
-    type:Number,
-   },
-   currentOrganization:{
-    type:String,
-   },
-   description:{
-    type:String,
-   },
-   availableTimingSlots:{
-    type:[
-        {
-            from:Date,
-            to:Date,
-            servicesType:[String],
-        }
-    ]
-
-   },
-   price:{
-    type:[
+    experience: {
+      type: Number,
+    },
+    currentOrganization: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+    availableTimingSlots: {
+      timings: {
+        type: [
+          {
+            from: String,
+            to: String,
+            servicesType: [String],
+          },
+        ],
+      },
+      weekdays: {
+        type: [String],
+      },
+    },
+    price: {
+      type: [
         {
           serviceType: String,
           rate: Number,
         },
       ],
     },
-    rating: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "review",
-    },
   },
   { timestamps: true }
 );
 
-export const DoctorUser = mongoose.model("doctorProfile", doctorProfileSchema);
+export const DoctorProfile = mongoose.model(
+  "doctorProfile",
+  doctorProfileSchema
+);

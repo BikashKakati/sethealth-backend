@@ -19,3 +19,13 @@ export const handleCreateServices = async (
     return res.customResponse(500, "Internal server error");
   }
 };
+
+export const handleGetAllServices = async(req:Request,res:Response)=>{
+  try{
+    const allServices = await Services.find({});
+  
+    res.customResponse(200, "All services is here", allServices);
+  }catch(err){
+    return res.customResponse(500,"Internal server error");
+  }
+}
