@@ -26,7 +26,7 @@ const servicesSchema = new mongoose.Schema(
     },
     symptoms: {
       type: [String],
-      minlength: [1, "Atlead one symptoms requried"],
+      minlength: [1, "At least one symptoms required"],
     },
   },
   { timestamps: true }

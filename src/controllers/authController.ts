@@ -6,7 +6,7 @@ import { generateTokens } from "../utils";
 import { tokenName } from "../config";
 import { cookieOptions } from "../constants";
 import { ObjectId } from "mongoose";
-import { RegisteredUsers } from "@/models/register.model";
+import { RegisteredUsers } from "../models/register.model";
 
 export const handleAdminRegister = async (
   req: Request<{}, {}, AdminUserSchemaZodType>,
@@ -19,7 +19,7 @@ export const handleAdminRegister = async (
       name,
       email,
       password,
-      role,
+      role: "admin",
     });
     await adminUser.save();
     await registeredUsers.save();
