@@ -7,7 +7,16 @@ const doctorProfileSchema = new mongoose.Schema(
       require: [true, "Degree is required"],
     },
     services: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "services" }],
+      type: [
+        {
+          serviceId:{ type: mongoose.Schema.Types.ObjectId, ref: "services" },
+          serviceTypes: {
+            type:[String]
+          },
+          // service name and symptoms can be changed over time...
+          
+        }
+      ],
     },
 
    experience:{
