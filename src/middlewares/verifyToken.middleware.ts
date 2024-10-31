@@ -19,7 +19,7 @@ export const verifyToken = (
       return res.customResponse(403, "Invalid Token");
     }
 
-    req.user! = { id: decode.id, role: decode.role };
+    req.user! = { id: decode.id, role: decode.role, email: decode.email };
     next();
   } catch (err) {
     if ((err as jwt.JsonWebTokenError).name === "TokenExpiredError") {
