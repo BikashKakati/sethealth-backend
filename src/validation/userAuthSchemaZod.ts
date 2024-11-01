@@ -1,7 +1,7 @@
-import { regExpressions } from "../../constants";
+import { regExpressions } from "../constants";
 import { z } from "zod";
 
-export const adminUserSchemaZod = z.object({
+export const userRegisterSchemaZod = z.object({
   name: z
     .string({ message: "Name field in not valid string" }).trim()
     .min(1, { message: "Name is required" }),
@@ -11,17 +11,15 @@ export const adminUserSchemaZod = z.object({
     .min(1, { message: "Email is required" }),
   password: z
     .string({ message: "Password field in not valid string" }).trim()
-    .min(1, { message: "Password is required" }).trim()
+    .min(1, { message: "Password is required" })
     .regex(
       regExpressions.passwordRegExp,
       "*Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (@, $, !, %, , ?, &), and be at least 5 characters long"
     ),
-  role: z
-    .string({ message: "role field in not valid string" }).trim()
-    .min(1, { message: "Role is required" }),
+    secretKey:z.string().trim().optional(),
 });
 
-export const adminUserLoginSchemaZod = z.object({
+export const userLoginSchemaZod = z.object({
   email: z
     .string({required_error:"Email is requried",invalid_type_error:"Email is not a valid string"}).trim()
     .min(1, { message: "Email is required" })
@@ -32,4 +30,5 @@ export const adminUserLoginSchemaZod = z.object({
   ).trim(),
 });
 
-export type AdminUserSchemaZodType = z.infer<typeof adminUserSchemaZod>;
+export type UserRegisterSchemaZodType = z.infer<typeof userRegisterSchemaZod>;
+export type UserLoginSchemaZodType = z.infer<typeof userLoginSchemaZod>;

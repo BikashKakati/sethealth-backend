@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import { boolean } from "zod";
 
 const registeredUsers = new mongoose.Schema(
   {
@@ -19,8 +20,13 @@ const registeredUsers = new mongoose.Schema(
     },
     role: {
       type: String,
-      require: [true, "role is required"],
+      enum:["patient","doctor","admin"],
+      default:"patient"
     },
+    status:{
+      type:Boolean,
+      default:true,
+    }
   },
   { timestamps: true }
 );
@@ -30,6 +36,7 @@ interface registerDocument extends mongoose.Document {
   email: string;
   password: string;
   role: string;
+  status:boolean;
   isModified: (path: string) => boolean;
 }
 
