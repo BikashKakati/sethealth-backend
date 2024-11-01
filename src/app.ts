@@ -5,6 +5,7 @@ import { customResponse } from "./middlewares/customRespones.middleware";
 import { adminRouter } from "./routes/admin.routes";
 import { authRoutes } from "./routes/auth.routes";
 import { doctorRouter } from "./routes/doctor.routes";
+import { inviteRoutes } from "./routes/admin/invite.route";
 
 export const app = express();
 
@@ -17,6 +18,7 @@ app.use(customResponse);
 app.use("/api/v1/auth", authRoutes);
 // admin
 app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/admin", inviteRoutes);
 
 //doctor
 app.use("/api/v1/doctor",doctorRouter)

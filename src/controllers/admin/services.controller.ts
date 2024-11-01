@@ -14,17 +14,15 @@ export const handleCreateServices = async (
     }
     const { serviceName, symptoms } = data;
 
-    
-    const alreadyExistData = await Services.findOne({serviceName});
-    if(alreadyExistData){
-        return res.customResponse(400,"Service Name already exist");
+    const alreadyExistData = await Services.findOne({ serviceName });
+    if (alreadyExistData) {
+      return res.customResponse(400, "Service Name already exist");
     }
-
 
     const newService = await Services.create({ serviceName, symptoms });
     return res.customResponse(201, "Service created successfully", newService);
-  } catch (err:any) {
-    return res.customResponse(500,"Internal server error");
+  } catch (err: any) {
+    return res.customResponse(500, "Internal server error");
   }
 };
 

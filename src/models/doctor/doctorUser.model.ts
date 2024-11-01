@@ -1,34 +1,36 @@
 import mongoose from "mongoose";
 
-const doctorUserSchema = new mongoose.Schema({
-    userName:{
-        type:String,
-        require:[true,"User Name is required"],
+const doctorUserSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      require: [true, "User Name is required"],
     },
-    phone:{
-        type:String,
-        unique:[true,"Phone number is already exist"],
-        require:[true,"Phone number required"],
+    phone: {
+      type: String,
+      unique: [true, "Phone number is already exist"],
+      require: [true, "Phone number required"],
     },
-    email:{
-        type:String,
-        unique:[true,"Email is already exist"],
-        require:[true,"Email is required"],
+    email: {
+      type: String,
+      unique: [true, "Email is already exist"],
+      require: [true, "Email is required"],
     },
-    password:{
-        type:String,
-        require:[true,"Email is required"],
-        select:false,
+    password: {
+      type: String,
+      require: [true, "Email is required"],
+      select: false,
     },
-    profileInfo:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"doctorProfile",
+    profileInfo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "doctorProfile",
     },
-    activeStatus:{
-        type:Boolean,
-        default:true,
+    activeStatus: {
+      type: Boolean,
+      default: true,
     },
+  },
+  { timestamps: true }
+);
 
-},{timestamps:true})
-
-export const DoctorUser = mongoose.model("doctorUser",doctorUserSchema);
+export const DoctorUser = mongoose.model("doctorUser", doctorUserSchema);
