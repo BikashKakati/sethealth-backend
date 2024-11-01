@@ -9,9 +9,9 @@ const serviceTypeSchema = z
   .min(1, "Service type cannot be empty.");
 
 export const doctorProfileSchemaZod = z.object({
-  doctorId:z.string().trim().min(1,"Doctor id is required"),
+  doctorId:z.string({invalid_type_error: "DoctorId must be a string"}).trim().min(1,"Doctor id is required"),
   degree: z
-    .string()
+    .string({invalid_type_error: "Degree must be a string",})
     .trim()
     .min(1, "Degree cannot be empty."),
 
@@ -33,14 +33,14 @@ export const doctorProfileSchemaZod = z.object({
     .min(0, "Experience cannot be negative."),
 
   currentOrganization: z
-    .string()
+    .string({invalid_type_error: "Current organization must be a string",})
     .trim()
     .max(50, "Current organization name cannot exceed 100 characters.")
     .optional()
     .nullable(),
 
   description: z
-    .string()
+    .string({invalid_type_error: "Description must be a string",})
     .trim()
     .min(1, "Description cannot be empty")
     .max(300, "Description cannot exceed 300 characters."),

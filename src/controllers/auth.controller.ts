@@ -29,29 +29,29 @@ export const handleRegister = async (
     const { name, email, password, secretKey} = data;
     
     // handling doctor invite
-    // const doctorInviteDetails = await DoctorInvite.findOne({email});
+    const doctorInviteDetails = await DoctorInvite.findOne({email});
 
     function getRole(){
       if(secretKey === "68"){
         return "admin";
       }
-      // if(doctorInviteDetails?.status === "pending"){
-      //   return "doctor";
-      // }
+      if(doctorInviteDetails?.status === "pending"){
+        return "doctor";
+      }
         return "doctor";
     }
 
     const role = getRole();
 
-    // if(role === "doctor"){
-    //   if(isInviteExpired(doctorInviteDetails?.createdAt,2)){
-    //     doctorInviteDetails?.set("status","expired");
-    //     await doctorInviteDetails?.save();
-    //     return res.customResponse(400,"Invitation has expired");
-    //   }
-    //   doctorInviteDetails?.set("status","accepted");
-    //   await doctorInviteDetails?.save();
-    // }
+    if(role === "doctor"){
+      if(isInviteExpired(doctorInviteDetails?.createdAt,2)){
+        doctorInviteDetails?.set("status","expired");
+        await doctorInviteDetails?.save();
+        return res.customResponse(400,"Invitation has expired");
+      }
+      doctorInviteDetails?.set("status","accepted");
+      await doctorInviteDetails?.save();
+    }
 
     const registeredUser = new RegisteredUsers({
       name,
@@ -59,10 +59,10 @@ export const handleRegister = async (
       password,
       role
     });
-    registeredUser.password = "";
-
-
+    
+    
     await registeredUser.save();
+    registeredUser.password = "";
 
     res.customResponse(200, "User Successfully Registered", registeredUser);
   } catch (error: any) {
@@ -89,15 +89,18 @@ export const handleLogin = async (
     const { email, password } = data;
   
     const user = await RegisteredUsers.findOne({ email }).select("+password");
+    console.log(user);
   
     if (!user) {
       return res.customResponse(404, "User not found/email incorrect");
     }
-  
-    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    console.log(password)
+    const passwordMatch = await bcrypt.compare(password,user.password);
+    console.log(passwordMatch);
   
     if (!passwordMatch) {
-      res.customResponse(400, "Password does not match");
+      return res.customResponse(400, "Password does not match");
     }
     
     const token = generateTokens(user._id as ObjectId, user.role);

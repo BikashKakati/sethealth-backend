@@ -17,20 +17,22 @@ export const handleInvite = async (
     const { name, email } = data;
     const userEmail = req?.user?.email;
 
+    const alreadyRegisterd = await RegisteredUsers.findOne({email});
+    if(alreadyRegisterd){
+      return res.customResponse(400, "User already registerd");
+    }
+
     const invitedUser = await DoctorInvite.findOne({ email });
     if (invitedUser) {
       return res.customResponse(400, "User already invited");
     }
-
-    const newInvite = new DoctorInvite({ name, email, invitedBy: userEmail });
-    await newInvite.save();
 
     const inviteLink = `http:/localhost:3000/register?email=${encodeURIComponent(
       email
     )}`;
     const templatePath = path.join(
       __dirname,
-      "../views/emailTemplates/inviteTemplate.ejs"
+      "../../views/emailTemplates/inviteTemplate.ejs"
     );
 
     await sendEmail(
@@ -43,7 +45,11 @@ export const handleInvite = async (
         inviteLink,
       }
     );
-    return res.customResponse(200, "Invitation sent successfully");
+
+    const newInvite = new DoctorInvite({ name, email, invitedBy: userEmail });
+    await newInvite.save();
+
+    return res.customResponse(200, "Invitation sent successfully", newInvite);
   } catch (err) {
     return res.customResponse(500, "Error sending invitation");
   }
