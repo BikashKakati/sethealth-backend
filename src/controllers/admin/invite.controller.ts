@@ -1,15 +1,20 @@
 import { Request, Response } from "express";
-import { DoctorInvite } from "../models/doctor/doctorInvite.model";
-import { RegisteredUsers } from "../models/register.model";
+import { DoctorInvite } from "../../models/doctor/doctorInvite.model";
+import { RegisteredUsers } from "../../models/register.model";
 import path from "path";
-import { sendEmail } from "../utils";
+import { sendEmail, validateRequest } from "../../utils";
+import { inviteSchemaZod } from "../../validation/admin/inviteSchemaZod";
 
 export const handleInvite = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const { name, email } = req.body;
+    const {success, data} = await validateRequest(inviteSchemaZod,req.body);
+    if(!success){
+      return res.customResponse(400, "fields are not valid", data);
+    }
+    const { name, email } = data;
     const userEmail = req?.user?.email;
 
     const invitedUser = await DoctorInvite.findOne({ email });
@@ -40,8 +45,6 @@ export const handleInvite = async (
     );
     return res.customResponse(200, "Invitation sent successfully");
   } catch (err) {
-    console.error("Error handling invite:", err);
     return res.customResponse(500, "Error sending invitation");
   }
-  return res.customResponse(200, "success");
 };
