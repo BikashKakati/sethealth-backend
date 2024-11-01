@@ -72,4 +72,6 @@ export const doctorProfileSchemaZod = z.object({
   ),
 });
 
+export const doctorProfileUpdateSchemaZod = doctorProfileSchemaZod.partial();
+
 export type DoctorProfileSchemaType = z.infer<typeof doctorProfileSchemaZod>;
