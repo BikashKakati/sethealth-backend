@@ -3,12 +3,91 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Invitation</title>
+    <title>Welcome to SetHealth</title>
+    <style>
+      /* General styling */
+      body {
+        font-family: Arial, sans-serif;
+        color: #333333;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        background-color: #007bff;
+        color: #ffffff;
+        text-align: center;
+        padding: 20px;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+      .content {
+        padding: 20px;
+        background-color: #eee;
+      }
+      .content h2 {
+        color: #007bff;
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+      .content p {
+        font-size: 16px;
+        line-height: 1.5;
+        margin: 10px 0;
+      }
+      .button {
+        display: inline-block;
+        background-color: #007bff;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 12px 24px;
+        border-radius: 4px;
+        font-weight: bold;
+        text-align: center;
+      }
+      .footer {
+        padding: 15px;
+        text-align: center;
+        background-color: #dad8d8;
+        font-size: 12px;
+        color: #666666;
+      }
+    </style>
   </head>
   <body>
-    <h1>Hi <%= name %>,</h1>
-    <p>You have been invited to join as a doctor on our platform.</p>
-    <p>Click the link below to complete your registration:</p>
-    <a href="<%= inviteLink %>">Complete Registration</a>
+    <div class="container">
+      <!-- Header Section -->
+      <div class="header">
+        <h1>Welcome to SetHealth!</h1>
+      </div>
+
+      <!-- Main Content Section -->
+      <div class="content">
+        <h2>Hello Dr. <%= name %>,</h2>
+        <p>We’re excited to welcome you to SetHealth! Our platform is dedicated to helping doctors like you connect with patients, manage consultations effortlessly, and grow your practice.</p>
+        <p>To get started, please complete your registration by clicking the button below:</p>
+        <p style="text-align: center;">
+          <a href="<%= inviteLink %>" class="button">Complete Registration</a>
+        </p>
+        <p>If you have any questions or need assistance, feel free to reach out to our support team at any time. We're here to help you make the most of SetHealth.</p>
+        <p>Welcome aboard, and here’s to a successful journey together!</p>
+      </div>
+
+      <!-- Footer Section -->
+      <div class="footer">
+        <p>&copy; 2024 SetHealth. All rights reserved.</p>
+        <p><a href="[Your Privacy Policy Link]" style="color: #007bff; text-decoration: none;">Privacy Policy</a> | <a href="[Your Terms Link]" style="color: #007bff; text-decoration: none;">Terms of Service</a></p>
+      </div>
+    </div>
   </body>
 </html>
