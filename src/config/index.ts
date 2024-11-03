@@ -1,6 +1,12 @@
 export const mongodbUrl = process.env.MONGODB_URL;
 export const serverPort = process.env.SERVER_PORT;
 
+// Admin client url
+export const adminClientUrl = process.env.ADMIN_CLIENT_URL;
+
+// Doctor client url
+export const doctorClientUrl = process.env.DOCTOR_CLIENT_URL;
+
 //token
 export const tokenKey: string = process.env.SECRET_KEY!;
 export const tokenName: string = process.env.TOKEN_NAME!;
