@@ -6,6 +6,10 @@ const doctorProfileSchema = new mongoose.Schema(
       type:mongoose.Schema.Types.ObjectId,
       ref:"doctorUser",
     },
+    phone:{
+      type:String,
+      require:[true,"Phone is required"]
+    },
     degree: {
       type: String,
       require: [true, "Degree is required"],
@@ -53,6 +57,14 @@ const doctorProfileSchema = new mongoose.Schema(
         },
       ],
     },
+    clinicAddress:{
+      pin:{
+        type:Number
+      },
+      state:String,
+      city:String,
+      nearBy:String,
+    }
   },
   { timestamps: true }
 );

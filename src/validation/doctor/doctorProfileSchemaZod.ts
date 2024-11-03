@@ -14,7 +14,9 @@ export const doctorProfileSchemaZod = z.object({
     .string({invalid_type_error: "Degree must be a string",})
     .trim()
     .min(1, "Degree cannot be empty."),
-
+  phone:z.number({invalid_type_error:"Phone number should bea valid number"})
+  .min(10,"Phone number should exact 10 digit")
+  .max(10,"Phone number should exact 10 digit"),
   services: z
     .array(
       z.object({
@@ -70,6 +72,12 @@ export const doctorProfileSchemaZod = z.object({
         .min(0, "Rate cannot be negative."),
     })
   ),
+  clinicAddress: z.object({
+    state: z.string({invalid_type_error:"State should be a valid string"}).trim().min(1,"State cannot be empty"),
+    city: z.string({invalid_type_error:"City should be a valid string"}).trim().min(1,"City cannot be empty"),
+    nearBy: z.string({invalid_type_error:"Near by should be a valid string"}).trim().min(1,"Near by cannot be empty"),
+    pin: z.number({invalid_type_error:"Pin should be a valid number"}).min(6,"Pin should always consist 6 numbers").max(6,"Pin should always consist 6 numbers"),
+  })
 });
 
 export const doctorProfileUpdateSchemaZod = doctorProfileSchemaZod.partial();
