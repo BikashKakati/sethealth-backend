@@ -8,4 +8,7 @@ export const servicesSchemaZod = z.object({
     ).nonempty({message:"Atleast one symptom required"})
 })
 
+export const servicesEditSchemaZod = servicesSchemaZod.partial();
+
 export type ServiceSchemaZodType = z.infer<typeof servicesSchemaZod>
+export type ServiceEditSchemaZodType = z.infer<typeof servicesEditSchemaZod>
