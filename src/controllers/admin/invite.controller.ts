@@ -4,6 +4,7 @@ import { RegisteredUsers } from "../../models/register.model";
 import path from "path";
 import { sendEmail, validateRequest } from "../../utils";
 import { inviteSchemaZod } from "../../validation/admin/inviteSchemaZod";
+import { adminClientUrl, doctorClientUrl } from "../../config";
 
 export const handleInvite = async (
   req: Request,
@@ -27,13 +28,10 @@ export const handleInvite = async (
       return res.customResponse(400, "User already invited");
     }
 
-    const inviteLink = `http:/localhost:3000/register?email=${encodeURIComponent(
+    const inviteLink = `${doctorClientUrl}/register?email=${encodeURIComponent(
       email
     )}`;
-    const templatePath = path.join(
-      __dirname,
-      "../../views/emailTemplates/inviteTemplate.ejs"
-    );
+    const templatePath = path.join(__dirname,"../../views/emailTemplates/inviteTemplate.ejs");
 
     await sendEmail(
       userEmail,
