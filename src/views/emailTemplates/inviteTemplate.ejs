@@ -48,7 +48,7 @@
       .button {
         display: inline-block;
         background-color: #007bff;
-        color: #ffffff;
+        color: #ffffff !important;
         text-decoration: none;
         padding: 12px 24px;
         border-radius: 4px;
@@ -74,19 +74,42 @@
       <!-- Main Content Section -->
       <div class="content">
         <h2>Hello Dr. <%= name %>,</h2>
-        <p>We’re excited to welcome you to SetHealth! Our platform is dedicated to helping doctors like you connect with patients, manage consultations effortlessly, and grow your practice.</p>
-        <p>To get started, please complete your registration by clicking the button below:</p>
-        <p style="text-align: center;">
+        <p>
+          We’re excited to welcome you to SetHealth! Our platform is dedicated
+          to helping doctors like you connect with patients, manage
+          consultations effortlessly, and grow your practice.
+        </p>
+        <p>
+          To get started, please complete your registration by clicking the
+          button below:
+        </p>
+        <p style="text-align: center">
           <a href="<%= inviteLink %>" class="button">Complete Registration</a>
         </p>
-        <p>If you have any questions or need assistance, feel free to reach out to our support team at any time. We're here to help you make the most of SetHealth.</p>
+        <p>
+          If you have any questions or need assistance, feel free to reach out
+          to our support team at any time. We're here to help you make the most
+          of SetHealth.
+        </p>
         <p>Welcome aboard, and here’s to a successful journey together!</p>
       </div>
 
       <!-- Footer Section -->
       <div class="footer">
         <p>&copy; 2024 SetHealth. All rights reserved.</p>
-        <p><a href="[Your Privacy Policy Link]" style="color: #007bff; text-decoration: none;">Privacy Policy</a> | <a href="[Your Terms Link]" style="color: #007bff; text-decoration: none;">Terms of Service</a></p>
+        <p>
+          <a
+            href="[Your Privacy Policy Link]"
+            style="color: #007bff; text-decoration: none"
+            >Privacy Policy</a
+          >
+          |
+          <a
+            href="[Your Terms Link]"
+            style="color: #007bff; text-decoration: none"
+            >Terms of Service</a
+          >
+        </p>
       </div>
     </div>
   </body>

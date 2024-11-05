@@ -74,7 +74,6 @@ export const sendEmail = async (
       subject,
       html: emailHtml,
     });
-
   } catch (error) {
     throw new Error("Failed to send email");
   }
