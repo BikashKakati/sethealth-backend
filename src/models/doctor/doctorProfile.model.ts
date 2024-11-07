@@ -4,7 +4,7 @@ const doctorProfileSchema = new mongoose.Schema(
   {
     doctorId: {
       type:mongoose.Schema.Types.ObjectId,
-      ref:"doctorUser",
+      ref:"registeredUsers",
     },
     phone:{
       type:String,

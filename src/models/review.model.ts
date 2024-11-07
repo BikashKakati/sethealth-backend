@@ -1,29 +1,27 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 const reviewSchema = new mongoose.Schema(
   {
     doctorId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "doctorUser",
+      ref: "registeredUsers",
       require: [true, "doctor id is required"],
     },
-    review: {
+    reviewMessage: {
       type: String,
     },
     rating: {
       type: Number,
     },
-    patientName: {
-      type: String,
-    },
     // Fix: patient modall.
     patientId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "doctorUser",
+      ref: "registeredUsers",
     },
-    serviceType: {
-      name: String,
-    },
+    appointmentId:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"appointment",
+    }
   },
   { timestamps: true }
 );
