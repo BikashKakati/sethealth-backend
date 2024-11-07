@@ -9,7 +9,7 @@ import {
   userLoginSchemaZod,
   UserLoginSchemaZodType,
   userRegisterSchemaZod,
-  UserRegisterSchemaZodType
+  UserRegisterSchemaZodType,
 } from "../validation/userAuthSchemaZod";
 import { DoctorInvite } from "../models/doctor/doctorInvite.model";
 
@@ -26,30 +26,30 @@ export const handleRegister = async (
       return res.customResponse(400, "fields are not valid", data);
     }
 
-    const { name, email, password, secretKey} = data;
-    
-    // handling doctor invite
-    const doctorInviteDetails = await DoctorInvite.findOne({email});
+    const { name, email, password, secretKey } = data;
 
-    function getRole(){
-      if(secretKey === "68"){
+    // handling doctor invite
+    const doctorInviteDetails = await DoctorInvite.findOne({ email });
+
+    function getRole() {
+      if (secretKey === "68") {
         return "admin";
       }
-      if(doctorInviteDetails?.status === "pending"){
+      if (doctorInviteDetails?.status === "pending") {
         return "doctor";
       }
-        return "doctor";
+      return "doctor";
     }
 
     const role = getRole();
 
-    if(role === "doctor"){
-      if(isInviteExpired(doctorInviteDetails?.createdAt,2)){
-        doctorInviteDetails?.set("status","expired");
+    if (role === "doctor") {
+      if (isInviteExpired(doctorInviteDetails?.updatedAt, 2)) {
+        doctorInviteDetails?.set("status", "expired");
         await doctorInviteDetails?.save();
-        return res.customResponse(400,"Invitation has expired");
+        return res.customResponse(400, "Invitation has expired");
       }
-      doctorInviteDetails?.set("status","accepted");
+      doctorInviteDetails?.set("status", "accepted");
       await doctorInviteDetails?.save();
     }
 
@@ -57,10 +57,9 @@ export const handleRegister = async (
       name,
       email,
       password,
-      role
+      role,
     });
-    
-    
+
     await registeredUser.save();
     registeredUser.password = "";
 
@@ -75,10 +74,10 @@ export const handleRegister = async (
 };
 
 export const handleLogin = async (
-  req:  Request<{}, {}, UserLoginSchemaZodType>,
+  req: Request<{}, {}, UserLoginSchemaZodType>,
   res: Response
 ): Promise<void> => {
-  try{
+  try {
     const { success, data } = await validateRequest(
       userLoginSchemaZod,
       req.body
@@ -87,30 +86,27 @@ export const handleLogin = async (
       return res.customResponse(400, "fields are not valid", data);
     }
     const { email, password } = data;
-  
+
     const user = await RegisteredUsers.findOne({ email }).select("+password");
-    console.log(user);
-  
+
     if (!user) {
       return res.customResponse(404, "User not found/email incorrect");
     }
 
-    console.log(password)
-    const passwordMatch = await bcrypt.compare(password,user.password);
-    console.log(passwordMatch);
-  
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
     if (!passwordMatch) {
       return res.customResponse(400, "Password does not match");
     }
-    
+
     const token = generateTokens(user._id as ObjectId, user.role);
-  
+
     user.password = ""; // because it gives type error when assign undefined
-  
+
     return res
       .cookie(tokenName, token, cookieOptions)
       .customResponse(200, "Login successfully", user);
-  }catch(err){
-    res.customResponse(500,"Error on Loging user");
+  } catch (err) {
+    res.customResponse(500, "Error on Loging user");
   }
 };
