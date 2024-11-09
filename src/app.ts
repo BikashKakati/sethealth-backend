@@ -6,6 +6,8 @@ import { adminRouter } from "./routes/admin.routes";
 import { authRoutes } from "./routes/auth.routes";
 import { doctorRouter } from "./routes/doctor.routes";
 import { adminClientUrl } from "./config";
+import { isAdmin } from "./middlewares/checkRoles.middleware";
+import { verifyToken } from "./middlewares/verifyToken.middleware";
 
 export const app = express();
 
@@ -17,7 +19,7 @@ app.use(customResponse);
 
 app.use("/api/v1/auth", authRoutes);
 // admin
-app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/admin", verifyToken, isAdmin, adminRouter);
 
 //doctor
 app.use("/api/v1/doctor", doctorRouter);
