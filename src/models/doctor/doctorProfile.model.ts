@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 const doctorProfileSchema = new mongoose.Schema(
   {
     doctorId: {
-      type:mongoose.Schema.Types.ObjectId,
-      ref:"registeredUsers",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "registeredUsers",
     },
-    phone:{
-      type:String,
-      require:[true,"Phone is required"]
+    phone: {
+      type: String,
+      require: [true, "Phone is required"],
     },
     degree: {
       type: String,
@@ -42,6 +42,7 @@ const doctorProfileSchema = new mongoose.Schema(
             from: String,
             to: String,
             servicesType: [String],
+            PatientsToSee: Number,
           },
         ],
       },
@@ -57,14 +58,14 @@ const doctorProfileSchema = new mongoose.Schema(
         },
       ],
     },
-    clinicAddress:{
-      pin:{
-        type:Number
+    clinicAddress: {
+      pin: {
+        type: Number,
       },
-      state:String,
-      city:String,
-      nearBy:String,
-    }
+      state: String,
+      city: String,
+      nearBy: String,
+    },
   },
   { timestamps: true }
 );

@@ -38,7 +38,8 @@ export const handleRegister = async (
       if (doctorInviteDetails?.status === "pending") {
         return "doctor";
       }
-      return "doctor";
+
+      return "patient";
     }
 
     const role = getRole();
@@ -107,6 +108,6 @@ export const handleLogin = async (
       .cookie(tokenName, token, cookieOptions)
       .customResponse(200, "Login successfully", user);
   } catch (err) {
-    res.customResponse(500, "Error on Loging user");
+    res.customResponse(500, "Error on Logging user");
   }
 };

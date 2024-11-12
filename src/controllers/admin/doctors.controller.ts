@@ -19,6 +19,6 @@ export const handleGetDoctorById = async (req: Request, res: Response) => {
       doctorInfo!
     );
   } catch (err: any) {
-    res.customResponse(400, `Failded to fetch details`);
+    res.customResponse(400, `Failed to fetch details`);
   }
 };
