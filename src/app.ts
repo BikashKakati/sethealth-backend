@@ -14,17 +14,19 @@ const allowedOrigins = [adminClientUrl, doctorClientUrl];
 export const app = express();
 
 app.use(
-    cors({
-      origin: (origin, callback) => {
-        if (allowedOrigins.includes(origin) || !origin) {
-          callback(null, true);
-        } else {
-          callback(new Error("Not allowed by CORS"));
-        }
-      },
-      credentials: true,
-    })
-  );app.use(express.json());
+  cors({
+    origin: (origin, callback) => {
+      if (allowedOrigins.includes(origin) || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
+
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(customResponse);

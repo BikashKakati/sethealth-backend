@@ -73,7 +73,7 @@ const appointments = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  appointmentCost: {
+  appointmentFee: {
     type: Number,
   },
   newPrescriptions: {
